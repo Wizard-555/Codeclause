@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Resume Builder</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-file-alt"></i> Interactive Resume Builder</h1>
+      <p>Create your professional resume with our intuitive builder</p>
+    </div>
+
+    <div class="main-content">
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <i class="fas fa-edit"></i>
+          <h2>Resume Information</h2>
+        </div>
+
+        <div class="progress-indicator">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text">Completion: <span id="progressText">0%</span></div>
+        </div>
+
+        <div class="template-selector">
+          <div class="template-option active" data-template="modern">
+            <i class="fas fa-laptop"></i>
+            <div>Modern</div>
+          </div>
+          <div class="template-option" data-template="classic">
+            <i class="fas fa-file-text"></i>
+            <div>Classic</div>
+          </div>
+          <div class="template-option" data-template="creative">
+            <i class="fas fa-paint-brush"></i>
+            <div>Creative</div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="personal">Personal</button>
+          <button class="tab" data-tab="experience">Experience</button>
+          <button class="tab" data-tab="education">Education</button>
+          <button class="tab" data-tab="skills">Skills</button>
+        </div>
+
+        <!-- Personal Tab -->
+        <div class="tab-content active" id="personal">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name"/>
+          </div>
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" id="jobTitle" placeholder="e.g., Software Developer"/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="yourname@example.com"/>
+              <div class="error-text">Please enter a valid email address</div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" placeholder="+91, 91, or 0 followed by 10 digits"/>
+              <div class="error-text">Please enter a valid phone number (10 digits with optional +91, 91, or 0 prefix)</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="City, Country"/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="website">Website/Portfolio</label>
+              <input type="url" id="website" placeholder="https://your-website.com"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="linkedin">LinkedIn</label>
+              <input type="url" id="linkedin" placeholder="https://linkedin.com/in/your-profile"/>
+            </div>
+            <div class="form-group">
+              <label for="github">GitHub</label>
+              <input type="url" id="github" placeholder="https://github.com/your-username"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="summary">Professional Summary</label>
+            <textarea id="summary" placeholder="Write a brief professional summary..."></textarea>
+          </div>
+        </div>
+
+        <!-- Experience Tab -->
+        <div class="tab-content" id="experience">
+          <div class="dynamic-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+              <button class="btn" onclick="addExperience()">
+                <i class="fas fa-plus"></i> Add Experience
+              </button>
+            </div>
+            <div id="experienceContainer"></div>
+          </div>
+        </div>
+
+        <!-- Education Tab -->
+        <div class="tab-content" id="education">
+          <div class="dynamic-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+              <button class="btn" onclick="addEducation()">
+                <i class="fas fa-plus"></i> Add Education
+              </button>
+            </div>
+            <div id="educationContainer"></div>
+          </div>
+        </div>
+
+        <!-- Skills Tab -->
+        <div class="tab-content" id="skills">
+          <div class="dynamic-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h3><i class="fas fa-cogs"></i> Skills</h3>
+              <button class="btn" onclick="addSkill()">
+                <i class="fas fa-plus"></i> Add Skill
+              </button>
+            </div>
+            <div id="skillsContainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Preview Section -->
+      <div class="preview-section">
+        <div class="section-header">
+          <i class="fas fa-eye"></i>
+          <h2>Live Preview</h2>
+        </div>
+        <div class="resume-preview" id="resumePreview">
+          <div class="resume-header">
+            <div class="resume-name">Your Name</div>
+            <div class="resume-title">Job Title</div>
+            <div class="resume-contact">
+              <div class="contact-item"><i class="fas fa-envelope"></i> your.email@example.com</div>
+              <div class="contact-item"><i class="fas fa-phone"></i> (123) 456-7890</div>
+              <div class="contact-item"><i class="fas fa-map-marker-alt"></i> City, Country</div>
+            </div>
+          </div>
+          <div class="resume-body">
+            <div class="resume-section">
+              <h3><i class="fas fa-user"></i> Summary</h3>
+              <p class="item-description">Start typing your professional summary to see it appear here...</p>
+            </div>
+            <div class="resume-section">
+              <h3><i class="fas fa-briefcase"></i> Experience</h3>
+              <div class="resume-item">
+                <div class="item-header-resume">
+                  <div>
+                    <div class="item-title-resume">Position Title</div>
+                    <div class="item-subtitle">Company Name</div>
+                  </div>
+                  <div class="item-date">Start - End</div>
+                </div>
+                <div class="item-description">Add your experience details here</div>
+              </div>
+            </div>
+            <div class="resume-section">
+              <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+              <div class="resume-item">
+                <div class="item-header-resume">
+                  <div>
+                    <div class="item-title-resume">Degree Name</div>
+                    <div class="item-subtitle">Institution Name</div>
+                  </div>
+                  <div class="item-date">Year</div>
+                </div>
+                <div class="item-description">GPA: 3.8/4.0</div>
+              </div>
+            </div>
+            <div class="resume-section">
+              <h3><i class="fas fa-cogs"></i> Skills</h3>
+              <div class="skills-grid">
+                <div class="skill-item">
+                  <div class="skill-name">Skill Name</div>
+                  <div class="skill-level">
+                    <div class="skill-progress" style="width: 70%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="export-buttons">
+          <button class="btn btn-success" onclick="downloadPDF()">
+            <i class="fas fa-download"></i> Download PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
